@@ -1,0 +1,3 @@
+Ivanov I.S. M NO Aeroflot SU1886 26.05.23 10.15 Moscow Saint-Petrburg
+Malkin A.M. M YES Pegas_Air PA1290 24.07.23 10.15 Moscow Istambul
+Protosoviskiy N.V. M YES Aeroflot SU1886 26.05.23 10.15 Moscow Saint-Petrburg

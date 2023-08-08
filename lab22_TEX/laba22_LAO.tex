@@ -1,0 +1,97 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage[papersize={195.9mm,259.4mm}]{geometry}
+\geometry{top=3cm,bottom=4cm,left=4cm,right=3.5cm}
+\usepackage{scrlayer-scrpage}
+\clearpairofpagestyles
+
+\newcommand*\mypagemark
+  {\begin{tabular}{c}\hline{ \hspace{3mm} \pagemark \hspace{5mm} }\\
+  \end{tabular}}
+
+\usepackage{booktabs}
+
+\DeclareNewLayer[
+    oddpage,
+    background,
+    page,
+    addheight=-3.2cm,
+    hoffset=9.9cm,
+    mode=picture,
+    contents=\clap{\mypagemark}
+]{pagenumber.odd}
+
+\DeclareNewLayer[
+    clone=pagenumber.odd,
+    evenpage,
+    hoffset=8.795cm,
+    contents=\clap{\mypagemark}
+]{pagenumber.even}
+
+\AddLayersToPageStyle{scrheadings}{pagenumber.odd,pagenumber.even}
+
+\AddLayersToPageStyle{plain}{pagenumber.odd,pagenumber.even}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+
+\begin{document}
+\newpage
+\setcounter{page}{293}
+{\small\noindent\textit{5.} Сформулируйте и докажите аналог теоремы 3 для односторонних производных (конечных и бесконечных).}
+
+{\textsf{\textbf{{П\,р\,и\,м\,е\,р\,ы.}}}} \textbf{1.}
+$y$ = arcsin $x$, $x$ = sin $y$, 
+{$-\frac{\pi}{2}\leqslant y\leqslant \frac{\pi}{2}$}, $-1 \leqslant\\ \leqslant x \leqslant 1.$ Применяя формулу (9.20), получаем
+$$\frac{dy}{dx} =(\text{arcsin } x)' = \frac{1}{\frac{dx}{dy}} = \frac{1}{\text{cos } y}.$$
+Так как{$-\frac{\pi}{2}\leqslant y\leqslant \frac{\pi}{2}$} , то cos $y>0$, поэтому cos $y = \sqrt{1-\sin^2y} = \\ = \sqrt{1-x^2}$. Таким образом, $(\arcsin{x})' = \frac{1}{ \sqrt{1-x^2}}$.
+
+\textbf{2.} $y=\arccos{x}, x=\cos{y}, 0\leqslant y \leqslant \pi, -1\leqslant x \leqslant 1$. Аналогчино предыдущему примеру имеем:\\
+{$$ \frac{dy}{dx} =( \text{arcxos }x)' = \frac{1}{\frac{dx}{dy}} = \frac{1}{\text{sin } y} = -\frac{1}{\sqrt{1 -cos^2y}} \ = -\frac{1}{\sqrt{1 -x^2}},  $$} т.е. $(\text{arccos } x)' = -\frac{1}{\sqrt{1 -x^2}}. $\\
+
+\textbf{3.}$y= \arctg{x}, x= \tg{y}, -\frac{\pi}{2}\leqslant y\leqslant \frac{\pi}{2}, -\infty<x<+\infty.$ Имеем:
+{$$ \frac{dy}{dx} =( \arctg{x})' = \frac{1}{\frac{dx}{dy}} = \cos^2{y} = \frac{1}{1 +\tg^2{x}} \ = \frac{1}{1 +x^2};  $$}
+итак, $(\arctg{x})'= \frac{1}{1+x^2}.$\\
+
+\textbf{4.}$y= \arctg{x}, x= \ctg{y}, 0\leqslant y\leqslant \pi, -\infty<x<\infty.$ В этом случае
+{$$ \frac{dy}{dx} =( \arcctg{x})' = \frac{1}{\frac{dx}{dy}} = -\sin^2{y} = -\frac{1}{1+\ctg^2{y}} \ = -\frac{1}{1 +x^2},  $$} т.е.$(\arcctg{x})' = -\frac{1}{1 +x^2}$.\\
+
+\textbf{5.}Если $y=\log_a{x}, x=a^y, a>0, a\ne 1, x>0, -\infty<y<+\infty, $то
+$$ \frac{dy}{dx} = (\log_a{x})'= \frac{1}{\frac{dx}{dy}} = \frac{1}{a^y \ln{a}} = \frac{1}{x \ln{a}}, $$ т.е. 
+$$(\log_a{x})' = \frac{1}{x \ln{a}};$$ в частности, при $a=e$ имеем $(\ln{x})'=\frac{1}{x}.$
+
+
+
+\newpage
+\noindent\textbf{9.7. Производная и дифферинциал\\
+сложной функции}\\
+\newline
+\noindent \textsf{\textbf{Т\,Е\,О\,Р\,Е\,М\,А 5.}}  \emph{Пусть функция}  
+\(y = f(x)\) \emp{имеет производную в точке}  \(x_{0}\) \emph{, а функция } \(z = F(y)\) \emph{имеет производную в точке}\\
+\(y_0 = f(x_0).\) \emp{Тогда сложная функция} \textsf{Ф}(x)$= F[f(x)]$ \emph{также имеет производную при} $x=x_0$, \emph{причем}
+{\small\[\text{\textsf{Ф}}'(x_0) = F'(y_0)f'(x_0) \eqno (9.21)\]}
+\hspace*{\parindent}Если сложную функцию \textsf{Ф} обозначить символом $\textsf{Ф}=F\circ f$\\ (см. п. 5.2), то формулу (9.21) можно записать в виде
+\begin{center}
+ \small$(F\circ f)'(x_0) = F'(f(x_0))f'(x_0)$
+\end{center}
+\hspace*{\parindent}Следует обратить внимание на то, что утверждение о существовании в точке $x_0$
+производной сложной функции $F[f(x)]$ сожержит предположение о том, что рассматриваемая сложная функция \
+имеет смысл, т.е. определена в некоторой окрестности точки $x_0$.\\
+\hspace*{\parindent}Опуская значения аргумента и используя запись производной с помощью \
+дифференциалов, равенство (9.21) можно переписать в виде\\
+{\small$$\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}  \text{.}$$ }
+{\noindent\large\textsf{$\text{Д}$\,о\,к\,а\,з\,а\,т\,е\,л\,ь\,с\,т\,в\,о.}}
+Прежде всего, в силу самого определения\
+производной, функция $F$ определена в некоторой окрестности $V(y_0)$ точки $y_0$, а так как из существования производной $f'(x_0)$ следует\
+непрерывность функции $f$, то для указанной окрестности $V(y_0)$ существует такая окрестность $U(y_0)$ точки $x_0$, что $f(U(x_0)\subset V(y_0))$, и, следовательно,\ для всех $x\in U(x_0)$ имеет смысл сложная функция $F(f(x))$.\\
+\hspace*{\parindent}Положим, как всегда, {\small$\Delta x=x-x_0, \Delta y=y-y_0, \Delta z =F(y)-F(y_0)$}. Функция $F$ имеет в точке $y_0$ производную и поэтому \
+дифференцируема в этой точке (см. п. 9.2). Это означает, что её приращение {\small$\Delta z$} при всех {\small$\Delta y$}, принаждлежащих некоторой окрестности точки {\small$\Delta y=0$} (в том числе и при {\small$\Delta y=0$}), представимо (см. формулы (9.6) и (9.7)) в виде
+\[\Delta z= F'(y_0)\Delta y +\varepsilon (\Delta y) \Delta y,\eqno (9.22)\]
+
+\end{document}
+
+% \noindent \textsf{\textbf{Т\,Е\,О\,Р\,Е\,М\,А 3.}}  \emph{Пусть функция}  
+% \(y_{1} = f_{1}(x)\) и \(y_{2} = f_{2}(x)\) \emph{определены в окрестности точки} \(x_{0}\in \mathrm{R}\) \emph{и имеют в самой точке} \(x_{0}\) \emph{производные, причем}

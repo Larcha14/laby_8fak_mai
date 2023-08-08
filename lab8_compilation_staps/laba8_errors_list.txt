@@ -1,0 +1,532 @@
+1) Ошибка Препроцессора:
+
+#include <stdio.h>
+#include "chto-to.h" 
+
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+
+}
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+8.1.c:2:10: fatal error: chto-to.h: No such file or directory
+    2 | #include "chto-to.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+
+
+#include <stdio.h>
+#incluude <chto-to.h>
+
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 2 "8.1.c" 2
+8.1.c:2:2: error: invalid preprocessing directive #incluude
+    2 | #incluude <chto-to.h>
+      |  ^~~~~~~~
+
+
+Исправляем:
+
+#include <stdio.h>
+
+
+int max(int a, int b);
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+			...
+# 17 "8.1.c"
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+
+}
+
+#include <stdio.h>
+#defiine x1 15
+
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+
+}
+
+
+# 3 "8.1.c" 2
+8.1.c:4:2: error: invalid preprocessing directive #defiine
+    4 | #defiine x1 15
+      |  ^~~~~~~
+
+
+исправляем: #define x1 15
+
+#define x154534 15 - ошибки нет;
+
+
+====================================================================================================
+2)Ошибка Компиляции
+
+#include <stdio.h>
+
+
+int max(int a, int b)
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+
+}
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+			...
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -std=c99 -pedantic -Wall 8.1.c
+8.1.c: In function ‘max’:
+8.1.c:19:11: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+   19 | int main(){
+      |           ^
+8.1.c:25: error: expected ‘{’ at end of input
+8.1.c:25: warning: control reaches end of non-void function [-Wreturn-type]
+
+
+Исправление int max(int a, int b);=================================
+
+#include <stdio.h>
+
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+			...
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -std=c99 -pedantic -Wall 8.1.c
+8.1.c: In function ‘main’:
+8.1.c:22:5: error: expected declaration or statement at end of input
+   22 |     printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+      |     ^~~~~~
+
+
+исправление:
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+
+=======================================
+
+
+#include <stdio.h>
+
+
+int max(int a, int b){
+    if (a>b){
+        return a;
+    } 
+    return b;
+}
+int max(int a, int b){
+    if (a>b){
+        return a;
+    } 
+    return b;
+}
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -std=c99 -pedantic -Wall 8.1.c
+8.1.c:40:5: error: redefinition of ‘max’
+   40 | int max(int a, int b){
+      |     ^~~
+8.1.c:34:5: note: previous definition of ‘max’ with type ‘int(int,  int)’
+   34 | int max(int a, int b){
+      |     ^~~
+
+исправление:
+#include <stdio.h>
+
+int max(int a, int b){
+    if (a>b){
+        return a;
+    } 
+    return b;
+}
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+# 1 "8.1.c"
+			...
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ 
+
+
+====================================================================================================
+3) Ошибка Ассемблирование
+
+#include <stdio.h>
+
+
+int max(int a, int b);
+
+int main(){
+    __asm__("I`m a hacker");
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+			...
+int main(){
+    __asm__("I`m a hacker");
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -std=c99 -pedantic -Wall 8.1.c
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -c -std=c99 -pedantic -Wall 8.1.c
+8.1.c: Assembler messages:
+8.1.c:61: Error: invalid character '`' in mnemonic
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ 
+
+
+исправление:
+
+
+int main(){
+    __asm__("nop");
+    // __asm__("I`m a hacker");
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+			...
+int main(){
+    __asm__("nop");
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -g -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -c -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ 
+
+=====================================================================================================
+
+4) Компоновка/Линковка 
+ 
+ 8.1.c
+#include <stdio.h>
+#include "8.2.c"
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+ 
+ 8.2.c
+ #include <stdio.h>
+
+int max(int a, int b){
+    if (a>b){
+        return a;
+    } 
+    return b;
+}
+
+int main(){
+    int x1=11;
+    int x2=13;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+ 
+ 
+ 
+
+ arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -Wall 8.1.c
+8.1.c:72:5: error: redefinition of ‘main’
+   72 | int main(){
+      |     ^~~~
+In file included from 8.1.c:68:
+8.2.c:10:5: note: previous definition of ‘main’ with type ‘int()’
+   10 | int main(){
+      |     ^~~~
+
+
+исправление:
+ 
+8.1.c
+#include <stdio.h>
+#include "8.2.c"
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+8.2.c
+#include <stdio.h>
+
+int max(int a, int b){
+    if (a>b){
+        return a;
+    } 
+    return b;
+}
+
+
+
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+			...
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -g -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -c -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ ./a.out
+f(10, 3) = 10
+
+ 
+ 
+==================
+ 
+ #include <stdio.h>
+#include "8.2.c"
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    int x1 =11;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+
+8.2.c
+#include <stdio.h>
+
+int max(int a, int b){
+    if (a>b){
+        return a;
+    } 
+    return b;
+}
+ 
+ arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -Wall 8.1.c 
+8.1.c: In function ‘main’:
+8.1.c:77:9: error: redefinition of ‘x1’
+   77 |     int x1 =11;
+      |         ^~
+8.1.c:75:9: note: previous definition of ‘x1’ with type ‘int’
+   75 |     int x1=10;
+      |         ^~
+
+ исправление:
+ 
+ #include <stdio.h>
+#include "8.2.c"
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+ 
+ arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+			...
+int main(){
+    int x1=10;
+    int x2=3;
+    printf("f(%d, %d) = %d", x1,x2, max(x1,x2));
+}
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -g -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -c -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -Wall 8.1.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ ./a.out
+f(10, 3) = 10
+
+ =================================================================================================
+
+5) Ошибка во время запуска // runtime
+
+#include <stdio.h>
+#include "8.2.c"
+
+int max(int a, int b);
+
+int main(){
+    int x1=10;
+    int x2=3;
+    int y = 10-x1;
+    printf("max(%d, %d) / %d = %d", x1,x2, y, max(x1,x2)/y);
+}
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -E -std=c99 -pedantic -Wall 8.1.c 
+# 0 "8.1.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 0 "<command-line>" 2
+			...
+int main(){
+    int x1=10;
+    int x2=3;
+    int y = 10-x1;
+    printf("max(%d, %d) / %d = %d", x1,x2, y, max(x1,x2)/y);
+}
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -S -std=c99 -pedantic -Wall 8.1.c 
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -c -std=c99 -pedantic -Wall 8.1.c 
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -Wall 8.1.c 
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ ./a.out
+Floating point exception (core dumped)
+
+ исправление:   y != 10-x1;
+ 		y = 1122-x1;
+ =========
+ 
+ 
+ 
+#include <stdio.h>
+
+int main(){
+    int c[5];
+    printf("%d", c[10000]);
+
+}
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -c -std=c99 -pedantic -Wall 8.1.c 
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -Wall 8.1.c 
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ ./a.out
+Segmentation fault (core dumped)
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,507 @@
+================================$$$$$$$$$$$$$$$$$$$$ переменные==================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ a=14
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ echo a
+a
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ echo $a
+14
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ arsenii@LarchCompu:~/Desktop/Unikall/lab$ echo $(a+10)
+a+10: command not found
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ echo $((a+10))
+24
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ a=$(pwd)
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ echo $a
+/home/arsenii/Desktop/Unikall/lab
+
+
+
+====================================SSH VS SFTP======================================================
+
+arsenii@LarchCompu:~$ ip a | grep "inet"
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+    inet 192.168.1.10/24 brd 192.168.1.255 scope global dynamic noprefixroute wlo1
+    inet6 fe80::6097:ba7c:bac4:4745/64 scope link noprefixroute 
+
+------------------SSH-----------------------
+
+arsenii@LarchCompu:~$ ssh arsenii@192.168.1.15
+arsenii@192.168.1.15's password: 
+Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.0-47-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+242 обновления может быть применено немедленно.
+126 из этих обновлений, являются стандартными обновлениями безопасности.
+Чтобы просмотреть дополнительные обновления выполните: apt list --upgradable
+
+Last login: Mon Dec 19 22:23:45 2022 from 192.168.1.10
+
+
+
+arsenii@Larch14Ko:~$ ls
+ 5lubu.txt   file       tt         Документы      Музыка
+ f1          KlassRob   u2.txt     Загрузки       Общедоступные
+ f1.txt      Papka1     uuuu.txt   Изображения   'Рабочий стол'
+ fe.txt      snap       Видео      Лабораторная   Шаблоны
+arsenii@Larch14Ko:~$ pwd
+/home/arsenii
+arsenii@Larch14Ko:~$ mkdir Test3l 
+arsenii@Larch14Ko:~$ ls
+ 5lubu.txt   file       Test3l     Видео         Лабораторная    Шаблоны
+ f1          KlassRob   tt         Документы     Музыка
+ f1.txt      Papka1     u2.txt     Загрузки      Общедоступные
+ fe.txt      snap       uuuu.txt   Изображения  'Рабочий стол'
+arsenii@Larch14Ko:~$ cd Test3l/
+arsenii@Larch14Ko:~/Test3l$ ip a | grep "inet"
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+    inet 192.168.1.15/24 brd 192.168.1.255 scope global dynamic noprefixroute wlp2s0
+
+arsenii@Larch14Ko:~/Test3l$ touch file{1..4} 
+arsenii@Larch14Ko:~/Test3l$ ls
+file1  file2  file3  file4
+
+
+arsenii@Larch14Ko:~/Test3l$ cat >file1
+Hi I'm the first
+arsenii@Larch14Ko:~/Test3l$ cat file1
+Hi I'm the first
+arsenii@Larch14Ko:~/Test3l$ put file1
+Команда «put» не найдена. Возможно, вы имели в виду:
+  command 'bput' from deb ax25-tools (0.0.10-rc5+git20190411+3595f87-5)
+  command 'pt' from deb tcllib (1.20+dfsg-1)
+		...
+  command 'nut' from deb nutsqlite (2.0.6-3)
+Try: sudo apt install <deb name>
+
+
+arsenii@Larch14Ko:~/Test3l$ ping ya.ru | head -5 | gzip -c | gzip -d
+PING ya.ru (87.250.250.242) 56(84) bytes of data.
+64 bytes from ya.ru (87.250.250.242): icmp_seq=1 ttl=52 time=7.78 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=2 ttl=52 time=9.18 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=3 ttl=52 time=9.28 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=4 ttl=52 time=9.65 ms
+
+arsenii@Larch14Ko:~/Test3l$ exit
+выход
+Connection to 192.168.1.15 closed.
+
+--------------------SFTP-------------
+
+arsenii@LarchCompu:~$ sftp arsenii@192.168.1.15
+arsenii@192.168.1.15's password: 
+Connected to 192.168.1.15.
+sftp> ls
+5lubu.txt                               KlassRob                                
+Papka1                                  Test3l                                  
+f1                                      f1.txt                                  
+fe.txt                                  file                                    
+snap                                    tt                                      
+u2.txt                                  uuuu.txt                                
+Видео                              Документы                      
+Загрузки                        Изображения                  
+Лабораторная                Музыка                            
+Общедоступные              Рабочий стол                 
+Шаблоны                          
+sftp> cd Test3l/
+sftp> ls
+'file1  file2  file3  file4  
+sftp> pwd
+Remote working directory: /home/arsenii/Test3l
+
+sftp> mkdir pt
+sftp> ls
+file1  file2  file3  file4  pt     
+sftp> touch f3
+Invalid command.
+sftp> cat f3
+Invalid command.
+sftp> ls
+file1  file2  file3  file4  pt   
+
+===========работа с удаленной машиной===========
+
+sftp> !ls
+ 1.c.save    Downloads	  main.c     Pictures	       setdrive.txt   Videos
+ a.out	    'GOG Games'   main.cpp   Public	       snap
+ Desktop     lab5	  Music      PycharmProjects   Templates
+ Documents   main	  pass.txt   Python-3.7.14     txt.txt
+ 
+ -------------------ошибки------------
+sftp> !cd Desktop
+sftp> !pwd
+/home/arsenii
+
+
+sftp> !ls & !cd Desktop/ & !ls
+/bin/bash: line 1: !cd: command not found
+/bin/bash: line 1: !ls: command not found
+ 1.c.save    Downloads	  main.c     Pictures	       setdrive.txt   Videos
+ a.out	    'GOG Games'   main.cpp   Public	       snap
+ Desktop     lab5	  Music      PycharmProjects   Templates
+ Documents   main	  pass.txt   Python-3.7.14     txt.txt
+Shell exited with status 127
+
+
+sftp> ping ya.ru | head -5 | gzip -c | gzip -d
+Invalid command.
+
+sftp> cd..
+Invalid command.
+sftp> cd ~
+stat remote: No such file or directory
+
+sftp> ls
+file1  file2  file3  file4  pt     tam    
+sftp> cd pt
+sftp> touch rr
+Invalid command.
+
+sftp> gzip -k file1 
+Invalid command.
+
+
+------------------------------           lls !ls и тд
+
+sftp> !pwd
+/home/arsenii
+sftp> lcd Desktop/Unikall/lab/Pryom/
+sftp> !pwd
+/home/arsenii/Desktop/Unikall/lab/Pryom
+
+sftp> get file1
+Fetching /home/arsenii/Test3l/file1 to file1
+file1                                         100%   17     0.0KB/s   00:00  
+
+sftp> !ls
+ file1
+sftp> !pwd
+/home/arsenii/Desktop/Unikall/lab/Pryom
+
+sftp> lpwd
+Local working directory: /home/arsenii/Desktop/Unikall/lab/Pryom
+sftp> lls
+  file1
+
+
+sftp> !touch tam
+sftp> !ls
+file1  tam
+
+sftp> put tam
+Uploading tam to /home/arsenii/Test3l/tam
+tam                                           100%    0     0.0KB/s   00:00    
+sftp> ls
+file1  file2  file3  file4  pt     tam    
+sftp> lls
+file1  tam
+
+sftp> !rm tam
+sftp> lls
+file1
+
+sftp> cd ../
+sftp> ls
+5lubu.txt                               KlassRob                                
+Papka1                                  Test3l                                  
+f1                                      f1.txt                                  
+fe.txt                                  file                                    
+snap                                    tt                                      
+u2.txt                                  uuuu.txt                                
+Видео                              Документы                      
+Загрузки                        Изображения                  
+Лабораторная                Музыка                            
+Общедоступные              Рабочий стол                 
+Шаблоны      
+
+sftp> exit
+
+==========================scp======
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/Send$ scp S1f.txt stepan@192.168.196.153:
+stepan@192.168.196.153's password: 
+S1f.txt                                                 100%    0     0.0KB/s   00:00  
+
+=====================================gzip  tar============================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+f1  Pryom
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -k f1
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+f1  f1.gz  Pryom
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -d f1.gz >fooo
+gzip: f1 already exists; do you wish to overwrite (y or n)? n
+	not overwritten
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+f1  f1.gz  fooo  Pryom
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ rm f1.gz fooo 
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+f1  Pryom
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip f1
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+f1.gz  Pryom
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -d f1.gz 
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+f1  Pryom
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -c f1 > f2.gz 
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+f1  f2.gz  Pryom
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -v f1
+f1:	  0.0% -- replaced with f1.gz
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ping ya.ru | head -5 | gzip -c | gzip -d 
+PING ya.ru (87.250.250.242) 56(84) bytes of data.
+64 bytes from ya.ru (87.250.250.242): icmp_seq=1 ttl=52 time=8.72 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=2 ttl=52 time=10.2 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=3 ttl=52 time=9.01 ms
+64 bytes from ya.ru (87.250.250.242): icmp_seq=4 ttl=52 time=10.1 ms
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ touch j{1..4} 
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ mv j? bigBob/
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+bigBob  f1  f2.gz  Pryom
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+bigBob  f1  f2.gz  Pryom
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls bigBob/
+j1  j2  j3  j4  Texstik.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -r bigBob/
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls bigBob/
+j1.gz  j2.gz  j3.gz  j4.gz
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -d bigBob/
+gzip: bigBob/ is a directory -- ignored
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ gzip -dr bigBob/
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls bigBob/
+j1  j2  j3  j4
+
+
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ tar -cf arch.tar bigBob/
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+arch.tar  bigBob  f1  f2.gz  Pryom
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls arch.tar 
+arch.tar
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ tar -xv < arch.tar 
+bigBob/
+bigBob/j4
+bigBob/j3
+bigBob/j2
+bigBob/j1
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+arch.tar  bigBob  f1  f2.gz  Pryom
+
+
+
+
+==================================iconv  UNIX2Dos===========================================
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ iconv --list
+The following list contains all the coded character sets known.  This does
+not necessarily mean that all combinations of these names can be used for
+the FROM and TO command line parameters.  One coded character set can be
+listed with several different names (aliases).
+
+  437, ... ASCII,
+  ASMO-708, ASMO_449, BALTIC, BIG-5, BIG-FIVE, BIG5-HKSCS, BIG5, BIG5HKSCS,
+  BIGFIVE, BRF, BS_4730, CA, CN-BIG5, CN-GB, CN, CP-AR, CP-GR, CP-HU, CP037,
+  CP038, CP273, 
+  		...
+  IBM-1122, IBM-1123, IBM-1124, IBM-1129, IBM-1130, IBM-1132, IBM-1133,
+  		...
+  OSF00010004, OSF00010005, OSF00010006, OSF00010007, OSF00010008, OSF00010009,
+		...
+  UNICODE, UNICODEBIG, UNICODELITTLE,
+  US-ASCII, US, UTF-7, UTF-8, UTF-16, UTF-16BE, UTF-16LE, UTF-32, UTF-32BE,
+  UTF-32LE, UTF7, UTF8, UTF16, UTF16BE, UTF16LE, UTF32, UTF32BE, UTF32LE,
+  VISCII, WCHAR_T, WIN-SAMI-2, WINBALTRIM, WINDOWS-31J, WINDOWS-874,
+  WINDOWS-936, WINDOWS-1250, WINDOWS-1251, WINDOWS-1252, WINDOWS-1253,
+  WINDOWS-1254, WINDOWS-1255, WINDOWS-1256, WINDOWS-1257, WINDOWS-1258,
+  WINSAMI2, WS2, YU
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ touch TextCP.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ cat TextCP.txt 
+Hello! Hooow areeee you???&&&90868579  I'm ok 123456789
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ iconv -f CP1251 -t KOI8-R TextCP.txt 
+Hello! Hooow areeee you???&&&90868579  I'm ok 123456789
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ cat > TextCP.txt 
+ПРивет, как дела? А я умею говорить, пока...
+Yes
+^C
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ cat TextCP.txt 
+ПРивет, как дела? А я умею говорить, пока...
+Yes
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ iconv -f KOI8-R -t UNICODE TextCP.txt ��?�?P%?f%?a%?c%O
+                 %, ?h%?_%?h% ?b%?c%?i%?_%? ?�% O�% O%?j%?c%O�% ??l%?a%?l%O%?f%O
+                                                                               %O�%, ?�?l%?h%?_%...
+Yes
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ iconv -f KOI8-R -t UNICODE TextCP.txt  -o Text2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ls
+arch.tar  bigBob  f1  f2.gz  Pryom  Text2.txt  TextCP.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ cat Text2.txt 
+��?�?P%?f%?a%?c%O
+                 %, ?h%?_%?h% ?b%?c%?i%?_%? ?�% O�% O%?j%?c%O�% ??l%?a%?l%O%?f%O
+                                                                               %O�%, ?�?l%?h%?_%...
+Yes
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ iconv -f CP1251 -t ASCII TextCP.txt 
+iconv: illegal input sequence at position 0
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ echo 'ПРивет ЯЯЯ wil be back @#@$&^*)_+(' > TextCP.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ cat TextCP.txt 
+ПРивет ЯЯЯ wil be back @#@$&^*)_+(
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ iconv -f UTF8 -t UTF16 TextCP.txt 
+�� 825B /// wil be back @#@$&^*)_+(
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ iconv -f UTF16 -t UTF8 TextCP.txt
+鿐ꃐ룐닐뗐苑퀠킯킯₯楷⁬敢戠捡⁫⍀⑀带⤪⭟ਨ
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ 
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ xxd Text2.txt                  ===================  xxd
+00000000: e9bf 90ea 8390 eba3 90eb 8b90 eb97 90e8  ................
+00000010: 8b91 ed80 a0ed 82af ed82 afe2 82af e6a5  ................
+00000020: b7e2 81ac e695 a2e6 88a0 e68d a1e2 81ab  ................
+00000030: e28d 80e2 9180 e5b8 a6e2 a4aa e2ad 9fe0  ................
+00000040: a8a8 
+
+
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ sudo apt install dos2unix
+[sudo] password for arsenii: 
+Reading package lists... Done
+		...
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/bigBob$ cat Texstik.txt 
+Hello, how are you?
+arsenii@LarchCompu:~/Desktop/Unikall/lab/bigBob$ xxd Texstik.txt 
+00000000: 4865 6c6c 6f2c 2068 6f77 2061 7265 2079  Hello, how are y
+00000010: 6f75 3f0a                                ou?.
+arsenii@LarchCompu:~/Desktop/Unikall/lab/bigBob$ unix2dos Texstik.txt 
+unix2dos: converting file Texstik.txt to DOS format...
+arsenii@LarchCompu:~/Desktop/Unikall/lab/bigBob$ xxd Texstik.txt 
+00000000: 4865 6c6c 6f2c 2068 6f77 2061 7265 2079  Hello, how are y
+00000010: 6f75 3f0d 0a                             ou?..
+
+LF = Перевод строки (Line Feed) (\n, 0x0A в шестнадцатеричной, 10 в десятичной системе счисления — перемещает курсор на следующую строку, не возвращаясь в начало строки.
+0d -windons добавляется при unix2dos
+
+CR = Возврат каретки (Carriage Return) (\r, 0x0D в шестнадцатеричной, 13 в десятичной системе счисления) — перемещает курсор в начало строки, не переходя на следующую строку.
+
+-----------------конвейеры---------------------------------
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab$ ssh arsenii@192.168.1.15 "ping ya.ru | head -5 | gzip -c" | gzip -d 
+arsenii@192.168.1.15's password: 
+PING ya.ru (87.250.250.242) 56(84) bytes of data.
+64 bytes from 242.250.250.87.in-addr.arpa (87.250.250.242): icmp_seq=1 ttl=52 time=9.27 ms
+64 bytes from 242.250.250.87.in-addr.arpa (87.250.250.242): icmp_seq=2 ttl=52 time=9.00 ms
+64 bytes from 242.250.250.87.in-addr.arpa (87.250.250.242): icmp_seq=3 ttl=52 time=9.03 ms
+64 bytes from 242.250.250.87.in-addr.arpa (87.250.250.242): icmp_seq=4 ttl=52 time=9.10 ms
+
+
+
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Texto.txt 
+Hello world! ! ?(_:;"!+!)"+!("
+Привет!
+ 
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f UTF8 -t UTF16 Texto.txt > Gg.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gg.txt 
+��Hello world! ! ?(_:;"!+!)"+!("
+@825B!
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f UTF16 -t UTF8 Gg.txt -o Gug.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gug.txt 
+Hello world! ! ?(_:;"!+!)"+!("
+Привет!
+
+ 
+ 
+    
+ arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat > Texto.txt 
+Привет! Меня зовут Арсений, я пытаюсь сдать 3 лабу, усердно пытаюсь...
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f UTF8 -t UTF16 Texto.txt > Gg.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gg.txt 
+��@825B! 5=O 7>2CB @A5=89, O ?KB0NAL A40BL 3 ;01C, CA5@4=> ?KB0NAL...
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f UTF16 -t UTF8 Gg.txt -o Gug.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gug.txt 
+Привет! Меня зовут Арсений, я пытаюсь сдать 3 лабу, усердно пытаюсь...
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f UTF8 -t KOI8 Texto.txt > Gg.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gg.txt 
+������! ���� ����� �������, � ������� ����� 3 ����, ������� �������...
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f KOI8 -t UTF16 Gg.txt -o Gug.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gug.txt 
+��@825B! 5=O 7>2CB @A5=89, O ?KB0NAL A40BL 3 ;01C, CA5@4=> ?KB0NAL...
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f UTF16 -t KOI8 Gug.txt -o Gg.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gg.txt 
+������! ���� ����� �������, � ������� ����� 3 ����, ������� �������...
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f KOI8 -t UTF8 Gg.txt -o Gug.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gug.txt 
+Привет! Меня зовут Арсений, я пытаюсь сдать 3 лабу, усердно пытаюсь...
+
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f KOI8 -t UTF8 Gg.txt > Gug.txt
+iconv: illegal input sequence at position 1
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat > Texto.txt 
+Привет! Меня зовут Арсений, я пытаюсь сдать 3 лабу, усердно пытаюсь...
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f UTF8 -t KOI8 Texto.txt > Gg.txt
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gg.txt 
+������! ���� ����� �������, � ������� ����� 3 ����, ������� �������...
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ iconv -f KOI8 -t UTF8 Gg.txt > Gug.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/lab/hh$ cat Gug.txt 
+Привет! Меня зовут Арсений, я пытаюсь сдать 3 лабу, усердно пытаюсь...
+
+
+
+
+
+
+
+
+
+

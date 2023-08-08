@@ -1,0 +1,1176 @@
+find место_поиска ключ-свойство значение_свойства
+- ключи являются аргументами
+
+===============================================find============================================================
+
+arsenii@LarchCompu:~/Desktop$ find Unikall/Bashprog/
+Unikall/Bashprog/
+Unikall/Bashprog/Testno
+Unikall/Bashprog/Testmain
+Unikall/Bashprog/Testmain/2.txt
+Unikall/Bashprog/Testmain/11.c
+Unikall/Bashprog/Testmain/hh.sh
+Unikall/Bashprog/Testmain/000.
+Unikall/Bashprog/Testmain/1.txt
+Unikall/Bashprog/Testmain/Test1
+Unikall/Bashprog/Testmain/Test1/oh2
+...
+Unikall/Bashprog/prog.txt
+Unikall/Bashprog/bashmemo (1).txt
+Unikall/Bashprog/laba21_v27.sh
+Unikall/Bashprog/Test2
+Unikall/Bashprog/Test2/kuk.c
+Unikall/Bashprog/funk1.sh
+Unikall/Bashprog/1.txt
+Unikall/Bashprog/1f.txt
+Unikall/Bashprog/kase.sh
+
+arsenii@LarchCompu:~/Desktop$ find Bashprog/
+find: ‘Bashprog/’: No such file or directory
+
+
+arsenii@LarchCompu:~/Desktop$ find -name Bashprog
+./Unikall/Bashprog
+
+arsenii@LarchCompu:~/Desktop$ touch Unikall/Bashprog/Test2.txt
+arsenii@LarchCompu:~/Desktop$ ls Unikall/Bashprog/
+ 1f.txt              funk1.sh        mains.sh   Test2.txt   Testspase
+ 1.txt               kase.sh         prog.txt   Testmain
+'bashmemo (1).txt'   laba21_v27.sh   Test2      Testno
+
+arsenii@LarchCompu:~/Desktop$ cd Unikall/Bashprog/
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find Test2
+Test2
+Test2/kuk.c
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find Test2*
+Test2
+Test2/kuk.c
+Test2.txt
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find Test2* -type f
+Test2/kuk.c
+Test2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find Test2* -type d
+Test2
+
+arsenii@LarchCompu:~/Desktop$ find -name "Test*" -type d               --------4 ключа
+./Unikall/Bashprog/Testno
+./Unikall/Bashprog/Testmain
+./Unikall/Bashprog/Testmain/Test1
+./Unikall/Bashprog/Testspase
+./Unikall/Bashprog/Test2
+
+
+arsenii@LarchCompu:~/Desktop$ find -name "Test*" -type d -or -name "f1"        ------------7 ключей
+./Unikall/Bashprog/Testno
+./Unikall/Bashprog/Testmain
+./Unikall/Bashprog/Testmain/Test1
+./Unikall/Bashprog/Testspase
+./Unikall/Bashprog/Test2
+./Unikall/GIT_ML/it-project/.git/objects/f1
+./Unikall/f1
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find "Testmain" -depth
+Testmain/2.txt
+Testmain/11.c
+Testmain/hh.sh
+Testmain/000.
+Testmain/1.txt
+Testmain/Test1/oh2/tttt.op
+Testmain/Test1/oh2
+Testmain/Test1/rrr
+Testmain/Test1/jj.cpp
+Testmain/Test1
+Testmain
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find "Testmain"
+Testmain
+Testmain/2.txt
+Testmain/11.c
+Testmain/hh.sh
+Testmain/000.
+Testmain/1.txt
+Testmain/Test1
+Testmain/Test1/oh2
+Testmain/Test1/oh2/tttt.op
+Testmain/Test1/rrr
+Testmain/Test1/jj.cpp
+
+
+перьмь
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find . -perm u=rwx,g=rwx,o=rx 
+.
+./Testno
+./Testmain
+./Testmain/Test1
+./Testmain/Test1/oh2
+./Testmain/Test1/rrr
+./AAA
+./AAA/Testno
+./AAA/Testmain
+./AAA/Testmain/Test1
+./AAA/Testmain/Test1/oh2
+./AAA/Testmain/Test1/rrr
+./AAA/mains.sh
+./AAA/Testspase
+./AAA/ss.sh
+./AAA/Test2
+./Testspase
+./prog.txt
+./laba21_v27.sh
+./Test2
+./1f.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Testmain$ find . -perm -444
+.
+./2.txt
+./11.c
+./hh.sh
+./000.
+./1.txt
+./Test1
+./Test1/oh2
+./Test1/oh2/tttt.op
+./Test1/rrr
+./Test1/jj.cpp
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find -name "Test*" -print0
+./Testno./Testmain./Testmain/Test1./AAA/Testno./AAA/Testmain./AAA/Testmain/Test1./AAA/Testspase./AAA/Test2./Testspase./Test2.txt./Test2
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find -name "Test*" -printf "%a %p  %s \n"
+Sat Mar 18 17:50:57.4920006710 2023 ./Testno  4096 
+Sat Mar 18 17:50:57.4960006710 2023 ./Testmain  4096 
+Sat Mar 18 17:50:57.5160006710 2023 ./Testmain/Test1  4096 
+Sun Mar 19 00:29:19.9108770490 2023 ./AAA/Testno  4096 
+Sun Mar 19 00:29:19.9108770490 2023 ./AAA/Testmain  4096 
+Sun Mar 19 00:29:19.9108770490 2023 ./AAA/Testmain/Test1  4096 
+Sun Mar 19 00:29:19.9108770490 2023 ./AAA/Testspase  4096 
+Sun Mar 19 00:29:19.9108770490 2023 ./AAA/Test2  4096 
+Sat Mar 18 17:50:57.4960006710 2023 ./Testspase  4096 
+Fri Mar 17 13:47:23.5155282580 2023 ./Test2.txt  0 
+Sat Mar 18 17:50:57.4920006710 2023 ./Test2  4096 
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find -name "Test*" -prune
+./Testno
+./Testmain
+./AAA/Testno
+./AAA/Testmain
+./AAA/Testspase
+./AAA/Test2
+./Testspase
+./Test2.txt
+./Test2
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find -atime 1 -name "Test*" -printf "%a %p \n" 
+Fri Mar 17 13:47:23.5155282580 2023 ./Test2.txt 
+
+arsenii@LarchCompu:~/Desktop/Unikall$ find -name "Test2.txt" -exec vi {} \;
+
+
+=====================================split===================================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ cat Test2.txt 
+1 l
+2
+3 l
+4 l
+5 l
+AAAA
+bbbbb
+v
+p
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ ls Test2
+kuk.c  Test2.txt
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split Test2.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  Test2.txt  xaa
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat xaa 
+1 l
+2
+3 l
+4 l
+5 l
+AAAA
+bbbbb
+v
+p
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -l 4 Test2.txt split_1.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  split_1.txtaa  split_1.txtab  split_1.txtac  Test2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat split_1.txtaa
+1 l
+2
+3 l
+4 l
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat split_1.txtab
+5 l
+AAAA
+bbbbb
+v
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat split_1.txtac
+p
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -l 4 Test2.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  Test2.txt  xaa  xab  xac
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -b 20 Test2.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  Test2.txt  xaa  xab
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat xaa
+1 l
+2
+3 l
+4 l
+5 l
+AA
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -b 3 Test2.txt --verbose
+creating file 'xaa'
+creating file 'xab'
+creating file 'xac'
+creating file 'xad'
+creating file 'xae'
+creating file 'xaf'
+creating file 'xag'
+creating file 'xah'
+creating file 'xai'
+creating file 'xaj'
+creating file 'xak'
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat xaa
+1 l
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  Test2.txt  xaa  xab  xac  xad  xae  xaf  xag  xah  xai  xaj  xak
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ rm xa*
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -l 4 -a 4 Test2.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  Test2.txt  xaaaa  xaaab  xaaac
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -l 4 -a 4 -d Test2.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  Test2.txt  x0000  x0001  x0002
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -n 3 Test2.txt --verbose
+creating file 'xaa'
+creating file 'xab'
+creating file 'xac'
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat xac
+
+bbbbb
+v
+p
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -l 4 -n 3 Test2.txt --verbose
+split: cannot split in more than one way
+Try 'split --help' for more information.
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > T3.txt 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat T3.txt 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -n 3 -e T3.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  T3.txt  Test2.txt  xaa
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat xaa
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -n 3  T3.txt 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  T3.txt  Test2.txt  xaa  xab  xac
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat xab
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ 
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ split -n 2 -a 1 -d Test2.txt balance
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+balance0  balance1  kuk.c  T3.txt  Test2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat balance1
+l
+AAAA
+bbbbb
+v
+p
+
+
+==============================================sed but True===========================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat >Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 's/Arsenii/Jim/' ./Test2.txt 
+I wrote this text fo test. My name is Jim. Ich bin 18.
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed -e 's/Arsenii/Jim/; s/18/22/' ./Test2.txt 
+I wrote this text fo test. My name is Jim. Ich bin 22.
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > MyRules.txt
+s/Arsenii/Bob/
+s/Ich bin/ I am/
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed -f MyRules.txt Test2.txt 
+I wrote this text fo test. My name is Bob.  I am 18.
+
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+I'm Arsenii and i know the another Arsenii, who is moron!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed -f MyRules.txt Test2.txt 
+I wrote this text fo test. My name is Bob.  I am 18.
+I'm Bob and i know the another Arsenii, who is moron!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+I'm Arsenii and i know the another Arsenii, who is moron!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 's/Arsenii/Bob/g' Test2.txt 
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I'm Bob and i know the another Bob, who is moron!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 's/Arsenii/Bob/p' Test2.txt 
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I'm Bob and i know the another Arsenii, who is moron!
+I'm Bob and i know the another Arsenii, who is moron!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 's/Arsenii/Bob/pg' Test2.txt 
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I'm Bob and i know the another Bob, who is moron!
+I'm Bob and i know the another Bob, who is moron!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 's/Arsenii/Bob/pgw output' Test2.txt 
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I'm Bob and i know the another Bob, who is moron!
+I'm Bob and i know the another Bob, who is moron!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  MyRules.txt  output  T3.txt  Test2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat output 
+I wrote this text fo test. My name is Bob. Ich bin 18.
+I'm Bob and i know the another Bob, who is moron!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed '2s/Arsenii/Bob/pg' Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+I'm Bob and i know the another Bob, who is moron!
+I'm Bob and i know the another Bob, who is moron!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed '2d' Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+I'm Arsenii and i know the another Arsenii, who is moron!
+
+можно удалять строки из текстового потока
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 'i\Hi!' Test2.txt 
+Hi!
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+Hi!
+I'm Arsenii and i know the another Arsenii, who is moron!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 'a\Bye!' Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+Bye!
+I'm Arsenii and i know the another Arsenii, who is moron!
+Bye!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed '2c\I am a very kind person!!!' Test2.txt 
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+I am a very kind person!!!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed 'y/bin/yAn/' Test2.txt 
+I wrote thAs text fo test. My name As ArsenAA. Ich yAn 18.
+I'm ArsenAA and A know the another ArsenAA, who As moron!
+
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sed '=' Test2.txt 
+1
+I wrote this text fo test. My name is Arsenii. Ich bin 18.
+2
+I'm Arsenii and i know the another Arsenii, who is moron!
+
+
+
+============================================== xargs =================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  MyRules.txt  output  T3.txt  Test2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ find . -name "*.txt" | xargs rm
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  output
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ find . -name "*.txt" | xargs tar -cf txtx.tar
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  output  T2.txt  T3.txt  T4.txt  txtx.tar
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls | xargs wc
+    0     0     0 kuk.c
+    2    24   105 output
+    0     0     0 T1.txt
+    0     0     0 T2.txt
+    0     0     0 T3.txt
+    0     0     0 T4.txt
+    0     7 10240 txtx.tar
+    2    31 10345 total
+
+
+================================================ df =================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ df
+Filesystem     1K-blocks     Used Available Use% Mounted on
+tmpfs            1607904     2244   1605660   1% /run
+/dev/nvme0n1p4  28660644 24691028   2488400  91% /
+tmpfs            8039508   325824   7713684   5% /dev/shm
+tmpfs               5120        4      5116   1% /run/lock
+/dev/nvme0n1p5 307446656 23633348 268122864   9% /home
+/dev/nvme0n1p2 146448416     5664 146442752   1% /boot/efi
+tmpfs            1607900     4736   1603164   1% /run/user/1000
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           1,6G  2,2M  1,6G   1% /run
+/dev/nvme0n1p4   28G   24G  2,4G  91% /
+tmpfs           7,7G  303M  7,4G   4% /dev/shm
+tmpfs           5,0M  4,0K  5,0M   1% /run/lock
+/dev/nvme0n1p5  294G   23G  256G   9% /home
+/dev/nvme0n1p2  140G  5,6M  140G   1% /boot/efi
+tmpfs           1,6G  4,7M  1,6G   1% /run/user/1000
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ df -x tmpfs
+Filesystem     1K-blocks     Used Available Use% Mounted on
+/dev/nvme0n1p4  28660644 24692600   2486828  91% /
+/dev/nvme0n1p5 307446656 23634528 268121684   9% /home
+/dev/nvme0n1p2 146448416     5664 146442752   1% /boot/efi
+
+=================================================== wc ==============================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ wc
+Hello, Worrld!
+It's me!
+
+
+Bye!
+      5       5      31
+"lines 	   word		bayt"
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ wc *.sh
+  172   803  6740 funk1.sh
+   11    18    97 kase.sh
+  108   312  2044 laba21_v27.sh
+   70   176  1336 mains.sh
+  361  1309 10217 total
+  
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ wc -l laba21_v27.sh 
+108 laba21_v27.sh
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ wc -c laba21_v27.sh 
+2044 laba21_v27.sh - "байты"
+
+
+===================================================== sort =========================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > texst2.txt
+Viny Puch
+Goblin
+Kit
+Python
+Morse
+Avraam Linkoln
+Boris Brytva
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ sort texst2.txt 
+Avraam Linkoln
+Boris Brytva
+Goblin
+Kit
+Morse
+Python
+Viny Puch
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ ls -l | sort -k1                    - 1 колонка
+drwxrwxr-x 2 arsenii arsenii 4096 мар 10 00:03 Testno
+drwxrwxr-x 2 arsenii arsenii 4096 мар 20 00:07 Test2
+drwxrwxr-x 2 arsenii arsenii 4096 мар  9 13:05 Testspase
+drwxrwxr-x 3 arsenii arsenii 4096 мар  8 23:36 Testmain
+drwxrwxr-x 6 arsenii arsenii 4096 мар 18 00:35 AAA
+-rw-rw-r-- 1 arsenii arsenii 1336 мар 17 22:44 mains.sh
+-rw-rw-r-- 1 arsenii arsenii   13 мар  8 22:11 1.txt
+-rw-rw-r-- 1 arsenii arsenii 6740 мар  6 14:54 funk1.sh
+-rw-rw-r-- 1 arsenii arsenii   97 мар  8 23:57 kase.sh
+-rwxrwxr-x 1 arsenii arsenii 2044 мар 13 19:28 laba21_v27.sh
+-rwxrwxr-x 1 arsenii arsenii  289 фев 13 18:05 prog.txt
+-rwxrwxr-x 1 arsenii arsenii  507 фев 13 18:01 1f.txt
+total 52
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ ls -l | sort -k8 -c
+sort: -:4: disorder: drwxrwxr-x 6 arsenii arsenii 4096 мар 18 00:35 AAA
+
+
+==================================================== cut ============================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > texst2.txt 
+Moscow - capital
+Piter - 2 capital
+Novosibirsk - power!
+Perm - perm.
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cut -d- -f2 texst2.txt 
+ capital
+ 2 capital
+ power!
+ perm.
+ 
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cut -d- -f1 texst2.txt 
+Moscow 
+Piter 
+Novosibirsk 
+Perm 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cut -c 1-8 texst2.txt 
+Moscow -
+Piter - 
+Novosibi
+Perm - p
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cut -c 3 texst2.txt 
+s
+t
+v
+r
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find -name "Test*" -type d 
+./Testno
+./Testmain
+./Testmain/Test1
+./AAA/Testno
+./AAA/Testmain
+./AAA/Testmain/Test1
+./AAA/Testspase
+./AAA/Test2
+./Testspase
+./Test2
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ find -name "Test*" -type d | cut -d/ -f2 
+Testno
+Testmain
+Testmain
+AAA
+AAA
+AAA
+AAA
+AAA
+Testspase
+Test2
+
+
+8============================================ od =====================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat texst2.txt 
+1246
+78
+Hi, men!
+.
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ od -b texst2.txt  - 8-ch
+0000000 061 062 064 066 012 067 070 012 110 151 054 040 155 145 156 041
+0000020 012 056 012
+0000023
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ od -An -c texst2.txt 
+   1   2   4   6  \n   7   8  \n   H   i   ,       m   e   n   !
+  \n   .  \n
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ od -x texst2.txt  -16-ch
+0000000 3231 3634 370a 0a38 6948 202c 656d 216e
+0000020 2e0a 000a
+0000023
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ od -i texst2.txt  -10-ch
+0000000   909390385   171456266   539781448   560883053
+0000020      667146
+0000023
+
+9================================================= du ================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ du -h 
+4,0K	./Testno
+4,0K	./Testmain/Test1/oh2
+4,0K	./Testmain/Test1/rrr
+12K	./Testmain/Test1
+16K	./Testmain
+4,0K	./AAA/Testno
+4,0K	./AAA/Testmain/Test1/oh2
+4,0K	./AAA/Testmain/Test1/rrr
+12K	./AAA/Testmain/Test1
+16K	./AAA/Testmain
+4,0K	./AAA/Testspase
+4,0K	./AAA/Test2
+40K	./AAA
+4,0K	./Testspase
+12K	./Test2
+112K	.
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ du -ha 
+4,0K	./Testno
+0	./Testmain/2.txt
+0	./Testmain/11.c
+0	./Testmain/hh.sh
+0	./Testmain/000.
+0	./Testmain/1.txt
+0	./Testmain/Test1/oh2/tttt.op
+4,0K	./Testmain/Test1/oh2
+4,0K	./Testmain/Test1/rrr
+0	./Testmain/Test1/jj.cpp
+12K	./Testmain/Test1
+16K	./Testmain
+4,0K	./AAA/Testno
+0	./AAA/Testmain/2.txt
+0	./AAA/Testmain/11.c
+0	./AAA/Testmain/Test1/oh2/tttt.op
+4,0K	./AAA/Testmain/Test1/oh2
+4,0K	./AAA/Testmain/Test1/rrr
+0	./AAA/Testmain/Test1/jj.cpp
+12K	./AAA/Testmain/Test1
+16K	./AAA/Testmain
+4,0K	./AAA/mains.sh
+0	./AAA/h.txt
+0	./AAA/     .txt
+0	./AAA/Testspase/     .txt
+4,0K	./AAA/Testspase
+0	./AAA/jj.txt
+4,0K	./AAA/ss.sh
+0	./AAA/Test2/kuk.c
+4,0K	./AAA/Test2
+40K	./AAA
+4,0K	./mains.sh
+0	./Testspase/     .txt
+4,0K	./Testspase
+4,0K	./prog.txt
+4,0K	./laba21_v27.sh
+4,0K	./Test2/texst2.txt
+0	./Test2/kuk.c
+4,0K	./Test2/output
+12K	./Test2
+8,0K	./funk1.sh
+4,0K	./1.txt
+4,0K	./1f.txt
+4,0K	./kase.sh
+112K	.
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ du -hs
+112K	.
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ du -hs /home/arsenii/Desktop/Unikall/
+741M	/home/arsenii/Desktop/Unikall/
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ du -ha --exclude="Test*"
+4,0K	./AAA/mains.sh
+0	./AAA/h.txt
+0	./AAA/     .txt
+0	./AAA/jj.txt
+4,0K	./AAA/ss.sh
+12K	./AAA
+4,0K	./mains.sh
+4,0K	./prog.txt
+4,0K	./laba21_v27.sh
+8,0K	./funk1.sh
+4,0K	./1.txt
+4,0K	./1f.txt
+4,0K	./kase.sh
+48K	.
+
+======================================================= comm =========================================
+по факту, отсортированные по алфавиту строчки
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > te1.txt
+Hello, my name is Arsenii.
+How are you?
+Im fine!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > texst2.txt 
+Hello, my name is Bob.
+How are you?
+Im bad!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ comm te1.txt texst2.txt 
+Hello, my name is Arsenii.
+	Hello, my name is Bob.
+		How are you?
+	Im bad!
+Im fine!
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ comm -1 te1.txt texst2.txt 
+Hello, my name is Bob.
+	How are you?
+Im bad!
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ comm -2 te1.txt texst2.txt 
+Hello, my name is Arsenii.
+	How are you?
+Im fine!
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ comm -12 te1.txt texst2.txt 
+How are you?
+
+11=================================== cmp ===========================================================
+побитовое сравнение файлов
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > te1.txt
+Hello, my name is Arsenii.
+How are you?
+Im fine!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > texst2.txt 
+Hello, my name is Bob.
+How are you?
+Im bad!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cmp te1.txt texst2.txt 
+te1.txt texst2.txt differ: byte 19, line 1
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cmp -c te1.txt texst2.txt 
+te1.txt texst2.txt differ: byte 19, line 1 is 101 A 102 B
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cmp -l te1.txt texst2.txt 
+19 101 102
+20 162 157
+21 163 142
+22 145  56
+23 156  12
+24 151 110
+25 151 157
+26  56 167
+27  12  40
+28 110 141
+29 157 162
+30 167 145
+32 141 171
+33 162 157
+34 145 165
+35  40  77
+36 171  12
+37 157 111
+38 165 155
+39  77  40
+40  12 142
+41 111 141
+42 155 144
+43  40  41
+44 146  12
+cmp: EOF on texst2.txt after byte 44
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cmp -l -c te1.txt texst2.txt 
+19 101 A    102 B
+20 162 r    157 o
+21 163 s    142 b
+22 145 e     56 .
+23 156 n     12 ^J
+24 151 i    110 H
+25 151 i    157 o
+26  56 .    167 w
+27  12 ^J    40  
+28 110 H    141 a
+29 157 o    162 r
+30 167 w    145 e
+32 141 a    171 y
+33 162 r    157 o
+34 145 e    165 u
+35  40       77 ?
+36 171 y     12 ^J
+37 157 o    111 I
+38 165 u    155 m
+39  77 ?     40  
+40  12 ^J   142 b
+41 111 I    141 a
+42 155 m    144 d
+43  40       41 !
+44 146 f     12 ^J
+cmp: EOF on texst2.txt after byte 44
+
+================================================== diff ==========================================
+построчное сравнение файлов
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > te1.txt
+Hello, my name is Arsenii.
+How are you?
+Im fine!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > texst2.txt 
+Hello, my name is Bob.
+How are you?
+Im bad!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ diff texst2.txt te1.txt 
+1c1
+< Hello, my name is Bob.
+---
+> Hello, my name is Arsenii.
+3c3
+< Im bad!
+---
+> Im fine!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ diff -c texst2.txt te1.txt 
+*** texst2.txt	2023-03-20 01:21:33.786590089 +0300
+--- te1.txt	2023-03-20 01:20:57.149691633 +0300
+***************
+*** 1,3 ****
+! Hello, my name is Bob.
+  How are you?
+! Im bad!
+--- 1,3 ----
+! Hello, my name is Arsenii.
+  How are you?
+! Im fine!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ diff -u texst2.txt te1.txt 
+--- texst2.txt	2023-03-20 01:21:33.786590089 +0300
++++ te1.txt	2023-03-20 01:20:57.149691633 +0300
+@@ -1,3 +1,3 @@
+-Hello, my name is Bob.
++Hello, my name is Arsenii.
+ How are you?
+-Im bad!
++Im fine!
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ diff -i texst2.txt te1.txt 
+1c1
+< Hello, my name is Bob.
+---
+> Hello, my name is Arsenii.
+3c3
+< Im bad!
+---
+> Im fine!
+
+
+13============================================== awk ===============================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog$ ls -l | awk '{print "Dir " $9 " has " $1}'
+Dir  has total
+Dir 1f.txt has -rwxrwxr-x
+Dir 1.txt has -rw-rw-r--
+Dir AAA has drwxrwxr-x
+Dir funk1.sh has -rw-rw-r--
+Dir kase.sh has -rw-rw-r--
+Dir laba21_v27.sh has -rwxrwxr-x
+Dir mains.sh has -rw-rw-r--
+Dir prog.txt has -rwxrwxr-x
+Dir Test2 has drwxrwxr-x
+Dir Testmain has drwxrwxr-x
+Dir Testno has drwxrwxr-x
+Dir Testspase has drwxrwxr-x
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > te1.txt 
+Hello! My name is Arsenii 
+Hello! My name is Arsenii 
+Hello! My name is Bob
+Hello! My name is Jhon
+Hello! My name is Alex
+Hello! My name is
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ awk '{print $5}' te1.txt 
+Arsenii
+Arsenii
+Bob
+Jhon
+Alex
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ awk 'BEGIN {print "The beginning of the file:"} {print $0} END {print "EOF"}' te1.txt 
+The beginning of the file:
+Hello! My name is Arsenii
+Hello! My name is Arsenii 
+Hello! My name is Bob
+Hello! My name is Jhon
+Hello! My name is Alex
+EOF
+
+
+14=============================================== join ===============================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > numb.txt 
+1 1  
+2 10
+3 11
+4 100
+5 101
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > te1.txt 
+1 Hello! My name is Ars
+2 Hello! My name is Jim
+3 Hello! My name is Bob
+4 Hello! My name is Jhon
+5 Hello! My name is Boris
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ join te1.txt numb.txt 
+1 Hello! My name is Ars 1
+2 Hello! My name is Jim 10
+3 Hello! My name is Bob 11
+4 Hello! My name is Jhon 100
+5 Hello! My name is Boris 101
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ join te1.txt numb.txt -a 1
+1 Hello! My name is Ars 1
+2 Hello! My name is Jim 10
+3 Hello! My name is Bob 11
+4 Hello! My name is Jhon 100
+5 Hello! My name is Boris 101
+6 Hello! ...Enpty
+7 Hello! End
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ join te1.txt numb.txt -a 2
+1 Hello! My name is Ars 1
+2 Hello! My name is Jim 10
+3 Hello! My name is Bob 11
+4 Hello! My name is Jhon 100
+5 Hello! My name is Boris 101
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ join te1.txt numb.txt -v 1
+6 Hello! ...Enpty
+7 Hello! End
+
+
+15=========================================== tee ===================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  numb.txt  output  te1.txt  texst2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls | tee 1.txt
+kuk.c
+numb.txt
+output
+te1.txt
+texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+1.txt  kuk.c  numb.txt  output  te1.txt  texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat 1.txt 
+kuk.c
+numb.txt
+output
+te1.txt
+texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls -l | tee -a 1.txt 
+total 20
+-rw-rw-r-- 1 arsenii arsenii  47 мар 20 17:16 1.txt
+-rw-rw-r-- 1 arsenii arsenii   0 мар  8 23:38 kuk.c
+-rw-rw-r-- 1 arsenii arsenii  26 мар 20 16:26 numb.txt
+-rw-rw-r-- 1 arsenii arsenii 105 мар 19 23:05 output
+-rw-rw-r-- 1 arsenii arsenii 154 мар 20 16:45 te1.txt
+-rw-rw-r-- 1 arsenii arsenii  44 мар 20 01:21 texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat 1.txt 
+1.txt
+kuk.c
+numb.txt
+output
+te1.txt
+texst2.txt
+total 20
+-rw-rw-r-- 1 arsenii arsenii  47 мар 20 17:16 1.txt
+-rw-rw-r-- 1 arsenii arsenii   0 мар  8 23:38 kuk.c
+-rw-rw-r-- 1 arsenii arsenii  26 мар 20 16:26 numb.txt
+-rw-rw-r-- 1 arsenii arsenii 105 мар 19 23:05 output
+-rw-rw-r-- 1 arsenii arsenii 154 мар 20 16:45 te1.txt
+-rw-rw-r-- 1 arsenii arsenii  44 мар 20 01:21 texst2.txt
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls | tee 1.txt | wc 
+      6       6      47
+      
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ df | tee 1.txt > /dev/null
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat 1.txt 
+Filesystem     1K-blocks     Used Available Use% Mounted on
+tmpfs            1607904     2332   1605572   1% /run
+/dev/nvme0n1p4  28660644 24679092   2500336  91% /
+tmpfs            8039508   165540   7873968   3% /dev/shm
+tmpfs               5120        4      5116   1% /run/lock
+/dev/nvme0n1p5 307446656 23695872 268060340   9% /home
+/dev/nvme0n1p2 146448416     5664 146442752   1% /boot/efi
+tmpfs            1607900     4744   1603156   1% /run/user/1000
+
+
+16=============================================== tr ==============================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ tr a b
+abab aaa next
+bbbb bbb next
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ tr -d [:lower:]
+AAAaaaBAbccC
+AAABAC
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ tr -d [:upper:]
+fafxaAbhfsvBBsahub
+fafxabhfsvsahub
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls -l | tr ' ' '/'
+total/20
+-rw-rw-r--/1/arsenii/arsenii/460/мар/20/17:29/1.txt
+-rw-rw-r--/1/arsenii/arsenii///0/мар//8/23:38/kuk.c
+-rw-rw-r--/1/arsenii/arsenii//26/мар/20/16:26/numb.txt
+-rw-rw-r--/1/arsenii/arsenii/105/мар/19/23:05/output
+-rw-rw-r--/1/arsenii/arsenii/154/мар/20/16:45/te1.txt
+-rw-rw-r--/1/arsenii/arsenii//44/мар/20/01:21/texst2.txt
+
+
+============================================== gzip ==============================================
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  numb.txt  te1.txt  texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ gzip te1.txt 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  numb.txt  te1.txt.gz  texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ gzip -d te1.txt.gz 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  numb.txt  te1.txt  texst2.txt
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ gzip -k te1.txt 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  numb.txt  te1.txt  te1.txt.gz  texst2.txt
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ gzip -c te1.txt > zippo.gz
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  numb.txt  te1.txt  texst2.txt  zippo.gz
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ gzip -vc te1.txt > zippo.gz
+te1.txt:	 52.6%
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+kuk.c  numb.txt  te1.txt  texst2.txt  zippo.gz
+
+
+============================================ tar ===================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ tar -cf arch.tar te1.txt texst2.txt 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+arch.tar  kuk.c  numb.txt  te1.txt  texst2.txt
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ tar -tf arch.tar 
+te1.txt
+texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ tar -xvf arch.tar 
+te1.txt
+texst2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+arch.tar  kuk.c  numb.txt  te1.txt  texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ tar -czvf foc.tar.gz te*
+te1.txt
+texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+arch.tar  foc.tar.gz  kuk.c  numb.txt  te1.txt  texst2.txt
+
+========================================= bzip2 =====================================================
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ cat > BigBoss
+kgwfuwuvfewfpoewhgfioerwagjfewahgfbhrwaukgfew qbg fcueqwigfnyeqwiuhfqwigrtiufhge4oighwteq;hgtrw;hgfwefewdkigahovbewiureeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeevvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrvvvvv243333333333333333333333333333333333333333333333333333333333333333335666666666666666698cn-23yrt987n42t84uhgq32ytmce9hfrt8e9pqwgtfiedvsbgkajbogperw-t3y83yr7t32rgerg37r8fq7r6g3eryfu3egruygt37t39rt93ur032rt09e3yteufhgkewjgfuewitf8ewfhuedgfbheygfew7t
+
+
+
+
+
+38r632yr8t43gfugrvee
+d3wfjgeuifgefe3
+tewgw
+tgewtger
+g
+ersgr
+esye
+ye
+y4e
+y45wy54y
+5ewy
+ery
+reyr
+yryryr56
+43t436
+43
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ wc BigBoss 
+ 22  19 861 BigBoss
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ bzip2 -1 BigBoss 
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+BigBoss.bz2  kuk.c  numb.txt  te1.txt  texst2.txt
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ wc BigBoss.bz2
+  0   8 355 BigBoss.bz2
+
+
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ ls
+BigBoss  BigBoss.bz2  kuk.c  numb.txt  te1.txt  texst2.txt
+arsenii@LarchCompu:~/Desktop/Unikall/Bashprog/Test2$ wc BigBoss*
+  22   19  861 BigBoss
+   0    8  355 BigBoss.bz2
+  22   27 1216 total
+
+

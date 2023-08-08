@@ -1,0 +1,768 @@
+#include <stdio.h>
+
+int recursion2(int n);
+
+int recursion1(int n){
+    if (n==0 || n==1){
+        return 1;
+    } else if(n<0){
+        return 0;
+    } 
+    return (recursion2(n-1)+recursion1(n-2));
+
+}
+
+int recursion2(int n){
+    if (n==0 || n==1 || n==2){
+        return 1;
+    } else if(n<0){
+        return 0;
+    } else {
+        return recursion2(n-1)+recursion2(n-2)+recursion2(n-3);
+    }
+
+}
+
+int main() {
+    int n=10;
+    int s;
+    s=recursion1(n)+recursion2(n);
+    printf("f(%d) = %d", n,s);
+
+}
+
+
+Терминал: 
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -Wall lab10.c
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ ./a.out 
+f(10) = 282
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gcc -std=c99 -pedantic -g lab10.c
+
+arsenii@LarchCompu:~/Documents/prog/projects/ones/Cprog$ gdb ./a.out
+GNU gdb (Ubuntu 12.0.90-0ubuntu1) 12.0.90
+Copyright (C) 2022 Free Software Foundation, Inc.
+License 
+
+	...
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./a.out...
+						***help***
+
+(gdb) help
+List of classes of commands:
+
+aliases -- User-defined aliases of other commands.
+		...
+user-defined -- User-defined commands.
+
+Type "help" followed by a class name for a list of commands in that class.
+	...
+Command name abbreviations are allowed if unambiguous.
+
+
+(gdb) help breakpoints
+Making program stop at certain points.
+
+List of commands:
+
+awatch -- Set an access watchpoint for EXPRESSION.
+break, brea, bre, br, b -- Set breakpoint at specified location.
+		...
+Type "help" followed by command name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
+
+					***list***
+Reading symbols from ./a.out...
+(gdb) list
+11	    return (recursion2(n-1)+recursion1(n-2));
+12	
+13	}
+14	
+15	int recursion2(int n){
+16	    if (n==0 || n==1 || n==2){
+17	        return 1;
+18	    } else if(n<0){
+19	        return 0;
+20	    } else {
+(gdb) list
+21	        return recursion2(n-1)+recursion2(n-2)+recursion2(n-3);
+22	    }
+23	
+24	}
+25	
+26	int main() {
+27	    int n=10;
+28	    int s;
+29	    s=recursion1(n)+recursion2(n);
+30	    printf("f(%d) = %d", n,s);
+(gdb) list
+31	
+32	}
+(gdb) list
+Line number 33 out of range; lab10.c has 32 lines.
+
+
+
+(gdb) list 1,53
+1	#include <stdio.h>
+2	
+3	int recursion2(int n);
+4	
+5	int recursion1(int n){
+6	    if (n==0 || n==1){
+7	        return 1;
+8	    } else if(n<0){
+9	        return 0;
+10	    } 
+11	    return (recursion2(n-1)+recursion1(n-2));
+12	
+13	}
+14	
+15	int recursion2(int n){
+16	    if (n==0 || n==1 || n==2){
+17	        return 1;
+18	    } else if(n<0){
+19	        return 0;
+20	    } else {
+21	        return recursion2(n-1)+recursion2(n-2)+recursion2(n-3);
+22	    }
+23	
+--Type <RET> for more, q to quit, c to continue without paging--
+24	}
+25	
+26	int main() {
+27	    int n=10;
+28	    int s;
+29	    s=recursion1(n)+recursion2(n);
+30	    printf("f(%d) = %d", n,s);
+31	
+32	}
+(gdb) list main
+19	        return 0;
+20	    } else {
+21	        return recursion2(n-1)+recursion2(n-2)+recursion2(n-3);
+22	    }
+23	
+24	}
+25	
+26	int main() {
+27	    int n=10;
+28	    int s;
+
+
+(gdb) list 1
+1	#include <stdio.h>
+2	
+3	int recursion2(int n);
+4	
+5	int recursion1(int n){
+6	    if (n==0 || n==1){
+7	        return 1;
+8	    } else if(n<0){
+9	        return 0;
+10	    } 
+(gdb)  "Enter"
+11	    return (recursion2(n-1)+recursion1(n-2));
+12	
+13	}
+14	
+15	int recursion2(int n){
+16	    if (n==0 || n==1 || n==2){
+17	        return 1;
+18	    } else if(n<0){
+19	        return 0;
+20	    } else {
+(gdb) list ,29
+20	    } else {
+21	        return recursion2(n-1)+recursion2(n-2)+recursion2(n-3);
+22	    }
+23	
+24	}
+25	
+26	int main() {
+27	    int n=10;
+28	    int s;
+29	    s=recursion1(n)+recursion2(n);
+					***run***
+(gdb) runf
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+f(10) = 282[Inferior 1 (process 8035) exited normally]
+
+
+int main() {
+    int n=10;
+    int s;
+    int p=0;
+    s=recursion1(n)+recursion2(n);
+    printf("f(%d) = %d", n,s);
+    printf("f(%d) / %d", s/p,p);                                    runtime деление на 0;
+
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGFPE, Arithmetic exception.
+0x000055555555524d in main () at lab10.c:31
+31	    printf("f(%d) / %d", s/p,p);
+
+
+					***break, delete, disable***
+					
+(gdb) break 14
+Breakpoint 1 at 0x5555555551ad: file lab10.c, line 16.
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out recursion2
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, recursion2 (n=9) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+(gdb) continue
+Continuing.
+
+Breakpoint 1, recursion2 (n=4) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+
+(gdb) delete 14
+No breakpoint number 14.
+(gdb) continue
+Continuing.
+
+Breakpoint 1, recursion2 (n=3) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+(gdb) delete 1
+(gdb) continue
+Continuing.
+f(10) = 343[Inferior 1 (process 35021) exited normally]
+
+
+(gdb) break recursion2
+Breakpoint 3 at 0x5555555551ad: file lab10.c, line 16.
+
+(gdb) break 5
+Breakpoint 4 at 0x555555555159: file lab10.c, line 6.
+(gdb) break 28
+Breakpoint 5 at 0x55555555521a: file lab10.c, line 28.
+(gdb) break 4
+Note: breakpoint 4 also set at pc 0x555555555159.
+Breakpoint 6 at 0x555555555159: file lab10.c, line 6.
+(gdb) break 30
+Breakpoint 7 at 0x555555555256: file lab10.c, line 31.
+(gdb) info break
+Num     Type           Disp Enb Address            What
+3       breakpoint     keep y   0x00005555555551ad in recursion2 at lab10.c:16
+4       breakpoint     keep y   0x0000555555555159 in recursion1 at lab10.c:6
+5       breakpoint     keep y   0x000055555555521a in main at lab10.c:28
+6       breakpoint     keep y   0x0000555555555159 in recursion1 at lab10.c:6
+7       breakpoint     keep y   0x0000555555555256 in main at lab10.c:31
+
+(gdb) delete
+Delete all breakpoints? (y or n) y
+(gdb) info break
+No breakpoints or watchpoints.
+
+
+(gdb) break 28
+Breakpoint 8 at 0x55555555521a: file lab10.c, line 28.
+(gdb) break 4
+Breakpoint 9 at 0x555555555159: file lab10.c, line 6.
+(gdb) break 15
+Breakpoint 10 at 0x5555555551ad: file lab10.c, line 16.
+(gdb) info break
+Num     Type           Disp Enb Address            What
+8       breakpoint     keep y   0x000055555555521a in main at lab10.c:28
+9       breakpoint     keep y   0x0000555555555159 in recursion1 at lab10.c:6
+10      breakpoint     keep y   0x00005555555551ad in recursion2 at lab10.c:16
+
+(gdb) delete 8-10
+(gdb) info break
+No breakpoints or watchpoints.
+
+(gdb) break 28
+Breakpoint 11 at 0x55555555521a: file lab10.c, line 28.
+
+(gdb) enable 9-11
+No breakpoint number 9.
+No breakpoint number 10.
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out recursion2
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) continue
+Continuing.
+f(10) = 343[Inferior 1 (process 42371) exited normally]
+(gdb) disable 9-11
+No breakpoint number 9.
+No breakpoint number 10.
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out recursion2
+		...
+f(10) = 343[Inferior 1 (process 42385) exited normally]
+(gdb) info break
+Num     Type           Disp Enb Address            What
+11      breakpoint     keep n   0x000055555555521a in main at lab10.c:28
+
+(gdb) enable 11
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out recursion2
+		...
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) info break
+Num     Type           Disp Enb Address            What
+11      breakpoint     keep y   0x000055555555521a in main at lab10.c:28
+	breakpoint already hit 1 time
+
+
+
+
+                                   ***next/step***
+                                   
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out recursion2
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) next
+29	    printf("f(%d) = %d", n,s);
+(gdb) next
+31	}
+
+(gdb) run
+		...
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) step
+recursion1 (n=10) at lab10.c:6
+6	    if (n==0 || n==1){
+(gdb) step
+8	    } else if(n<0){
+(gdb) step
+11	    return (recursion2(n-1)+recursion1(n-2));
+(gdb) step
+recursion2 (n=9) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+(gdb) finish                                                         ***finish***
+Run till exit from #0  recursion2 (n=9) at lab10.c:16
+0x0000555555555186 in recursion1 (n=10) at lab10.c:11
+11	    return (recursion2(n-1)+recursion1(n-2));
+Value returned is $3 = 105
+
+
+(gdb) break 27
+Breakpoint 1 at 0x120b: file lab10.c, line 28.
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) step
+recursion1 (n=10) at lab10.c:6
+6	    if (n==0 || n==1){
+(gdb) step
+8	    } else if(n<0){
+(gdb) step
+11	    return recursion2(n-1)+recursion2(n-2);
+(gdb) step
+recursion2 (n=9) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+(gdb) step
+18	    } else if(n<0){
+(gdb) step
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) step
+recursion1 (n=8) at lab10.c:6
+6	    if (n==0 || n==1){
+
+
+
+(gdb) step
+recursion1 (n=10) at lab10.c:6
+6	    if (n==0 || n==1){
+(gdb) next
+8	    } else if(n<0){
+(gdb) step
+11	    return recursion2(n-1)+recursion2(n-2);
+(gdb) next
+13	}
+(gdb) next
+main () at lab10.c:29
+29	    printf("f(%d) = %d", n,s);
+
+
+
+(gdb) break 11
+Breakpoint 3 at 0x555555555179: file lab10.c, line 11.
+(gdb) break 21
+Breakpoint 4 at 0x5555555551d3: file lab10.c, line 21.
+(gdb) break 27
+Breakpoint 5 at 0x55555555520b: file lab10.c, line 28.
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 5, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) next
+
+Breakpoint 3, recursion1 (n=10) at lab10.c:11
+11	    return recursion2(n-1)+recursion2(n-2);
+(gdb) next
+
+Breakpoint 4, recursion2 (n=9) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) next
+
+Breakpoint 3, recursion1 (n=8) at lab10.c:11
+11	    return recursion2(n-1)+recursion2(n-2);
+(gdb) next
+
+Breakpoint 4, recursion2 (n=7) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) step
+recursion1 (n=6) at lab10.c:6
+6	    if (n==0 || n==1){
+(gdb) step
+8	    } else if(n<0){
+(gdb) step
+
+Breakpoint 3, recursion1 (n=6) at lab10.c:11
+11	    return recursion2(n-1)+recursion2(n-2);
+(gdb) step
+recursion2 (n=5) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+
+(gdb) delete 3
+(gdb) continue
+Continuing.
+
+Breakpoint 4, recursion2 (n=5) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) next
+
+Breakpoint 4, recursion2 (n=3) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) delete 4
+(gdb) 
+(gdb) next
+23	}
+
+
+
+				***print, display, where, backtrace***     where=backtrace
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) print n
+$4 = 10
+(gdb) step
+recursion1 (n=10) at lab10.c:6
+6	    if (n==0 || n==1){
+(gdb) step
+8	    } else if(n<0){
+(gdb) step
+11	    return (recursion2(n-1)+recursion1(n-2));
+
+(gdb) print recursion1
+$5 = {int (int)} 0x555555555149 <recursion1>
+
+(gdb) step
+recursion2 (n=9) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+(gdb) step
+18	    } else if(n<0){
+(gdb) print n
+$8 = 9
+(gdb) print recursion2
+$9 = {int (int)} 0x55555555519d <recursion2>
+(gdb) where
+#0  recursion2 (n=9) at lab10.c:18
+#1  0x0000555555555186 in recursion1 (n=10) at lab10.c:11
+#2  0x0000555555555224 in main () at lab10.c:28
+
+
+
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out n 11
+		...
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+2: n = 10
+(gdb) backtrace
+#0  main () at lab10.c:28
+(gdb) step
+recursion1 (n=10) at lab10.c:6
+6	    if (n==0 || n==1){
+(gdb) step
+8	    } else if(n<0){
+(gdb) step
+11	    return (recursion2(n-1)+recursion1(n-2));
+(gdb) step
+recursion2 (n=9) at lab10.c:16
+16	    if (n==0 || n==1 || n==2){
+(gdb) backtrace
+#0  recursion2 (n=9) at lab10.c:16
+#1  0x0000555555555186 in recursion1 (n=10) at lab10.c:11
+#2  0x0000555555555224 in main () at lab10.c:28
+
+
+(gdb) list 1,31
+1	#include <stdio.h>
+2	
+3	int recursion2(int n);
+4	
+5	int recursion1(int n){
+6	    if (n==0 || n==1){
+7	        return 1;
+8	    } else if(n<0){
+9	       return 0;
+10	    } 
+11	    return recursion2(n-1)+recursion2(n-2);
+12	
+13	}
+14	
+15	int recursion2(int n){
+16	    if (n==0 || n==1 || n==2){
+17	        return 1;
+18	    } else if(n<0){
+19	        return 0;
+20	    } else {
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+22	    }
+23	}
+--Type <RET> for more, q to quit, c to continue without paging--
+24	
+25	int main() {
+26	    int n=10;
+27	    int s;
+28	    s=recursion1(n)+recursion2(n);
+29	    printf("f(%d) = %d", n,s);
+30	
+31	}
+(gdb) break 21
+Breakpoint 1 at 0x11d3: file lab10.c, line 21.
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, recursion2 (n=9) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) next
+
+Breakpoint 1, recursion2 (n=7) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) next
+
+Breakpoint 1, recursion2 (n=5) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) next
+
+Breakpoint 1, recursion2 (n=3) at lab10.c:21
+21	        return recursion1(n-1)+recursion1(n-2);//+recursion2(n-3);
+(gdb) backtrace
+#0  recursion2 (n=3) at lab10.c:21
+#1  0x0000555555555186 in recursion1 (n=4) at lab10.c:11
+#2  0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#3  0x0000555555555186 in recursion1 (n=6) at lab10.c:11
+#4  0x00005555555551e0 in recursion2 (n=7) at lab10.c:21
+#5  0x0000555555555186 in recursion1 (n=8) at lab10.c:11
+#6  0x00005555555551e0 in recursion2 (n=9) at lab10.c:21
+#7  0x0000555555555186 in recursion1 (n=10) at lab10.c:11
+#8  0x0000555555555215 in main () at lab10.c:28
+
+(gdb) info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00005555555551d3 in recursion2 at lab10.c:21
+	breakpoint already hit 4 times
+(gdb) delete 1
+(gdb) info break
+No breakpoints or watchpoints.
+(gdb) continue
+Continuing.
+f(10) = 144[Inferior 1 (process 17155) exited normally]
+
+
+
+				***set var***
+
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out n 11
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+(gdb) set var n =11
+(gdb) display n
+2: n = 11
+(gdb) continue
+Continuing.
+f(11) = 629[Inferior 1 (process 44283) exited normally]
+
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out n 11
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 11, main () at lab10.c:28
+28	    s=recursion1(n)+recursion2(n);
+2: n = 10
+							***ptype***
+(gdb) ptype n
+type = int
+(gdb) step
+recursion1 (n=10) at lab10.c:6
+6	    if (n==0 || n==1){
+(gdb) ptype n
+type = int
+
+(gdb) delete display
+Delete all auto-display expressions? (y or n) y
+(gdb) info display
+There are no auto-display expressions now.
+
+
+(gdb) q
+A debugging session is active.
+ 
+	Inferior 1 [process 18518] will be killed.
+
+Quit anyway? (y or n) y
+
+
+бесконечная рекурсия
+
+
+(gdb) run
+Starting program: /home/arsenii/Documents/prog/projects/ones/Cprog/a.out 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555555551a5 in recursion2 (n=<error reading variable: Cannot access memory at address 0x7fffff7fefec>) at lab10.c:15
+15	int recursion2(int n){
+(gdb) where
+#0  0x00005555555551a5 in recursion2 (
+    n=<error reading variable: Cannot access memory at address 0x7fffff7fefec>)
+    at lab10.c:15
+#1  0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#2  0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#3  0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#4  0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#5  0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#6  0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#7  0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#8  0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#9  0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#10 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#11 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#12 0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#13 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#14 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#15 0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#16 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#17 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#18 0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#19 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#20 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+--Type <RET> for more, q to quit, c to continue without paging--
+		...
+#12935 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#12936 0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#12937 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#12938 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#12939 0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#12940 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#12941 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#12942 0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#12943 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+#12944 0x00005555555551e0 in recursion2 (n=5) at lab10.c:21
+#12945 0x00005555555551ef in recursion2 (n=3) at lab10.c:21
+#12946 0x00005555555551e0 in recursion2 (n=4) at lab10.c:21
+
+
+
+
+Breakpoint 1, recursion2 (n=177) at lab10.c:21
+21	        return recursion1(n+1)+recursion1(n+2);//+recursion2(n-3);
+(gdb) 
+
+Breakpoint 1, recursion2 (n=179) at lab10.c:21
+21	        return recursion1(n+1)+recursion1(n+2);//+recursion2(n-3);
+(gdb) backtrace
+#0  recursion2 (n=179) at lab10.c:21
+#1  0x0000555555555186 in recursion1 (n=178) at lab10.c:11
+#2  0x00005555555551e0 in recursion2 (n=177) at lab10.c:21
+#3  0x0000555555555186 in recursion1 (n=176) at lab10.c:11
+#4  0x00005555555551e0 in recursion2 (n=175) at lab10.c:21
+#5  0x0000555555555186 in recursion1 (n=174) at lab10.c:11
+#6  0x00005555555551e0 in recursion2 (n=173) at lab10.c:21
+#7  0x0000555555555186 in recursion1 (n=172) at lab10.c:11
+#8  0x00005555555551e0 in recursion2 (n=171) at lab10.c:21
+#9  0x0000555555555186 in recursion1 (n=170) at lab10.c:11
+#10 0x00005555555551e0 in recursion2 (n=169) at lab10.c:21
+#11 0x0000555555555186 in recursion1 (n=168) at lab10.c:11
+#12 0x00005555555551e0 in recursion2 (n=167) at lab10.c:21
+#13 0x0000555555555186 in recursion1 (n=166) at lab10.c:11
+#14 0x00005555555551e0 in recursion2 (n=165) at lab10.c:21
+#15 0x0000555555555186 in recursion1 (n=164) at lab10.c:11
+#16 0x00005555555551e0 in recursion2 (n=163) at lab10.c:21
+#17 0x0000555555555186 in recursion1 (n=162) at lab10.c:11
+#18 0x00005555555551e0 in recursion2 (n=161) at lab10.c:21
+#19 0x0000555555555186 in recursion1 (n=160) at lab10.c:11
+#20 0x00005555555551e0 in recursion2 (n=159) at lab10.c:21
+#21 0x0000555555555186 in recursion1 (n=158) at lab10.c:11
+#22 0x00005555555551e0 in recursion2 (n=157) at lab10.c:21
+--Type <RET> for more, q to quit, c to continue without paging--
+#23 0x0000555555555186 in recursion1 (n=156) at lab10.c:11
+#24 0x00005555555551e0 in recursion2 (n=155) at lab10.c:21
+#25 0x0000555555555186 in recursion1 (n=154) at lab10.c:11
+#26 0x00005555555551e0 in recursion2 (n=153) at lab10.c:21
+#27 0x0000555555555186 in recursion1 (n=152) at lab10.c:11
+#28 0x00005555555551e0 in recursion2 (n=151) at lab10.c:21
+#29 0x0000555555555186 in recursion1 (n=150) at lab10.c:11
+#30 0x00005555555551e0 in recursion2 (n=149) at lab10.c:21
+#31 0x0000555555555186 in recursion1 (n=148) at lab10.c:11
+#32 0x00005555555551e0 in recursion2 (n=147) at lab10.c:21
+#33 0x0000555555555186 in recursion1 (n=146) at lab10.c:11
+#34 0x00005555555551e0 in recursion2 (n=145) at lab10.c:21
+#35 0x0000555555555186 in recursion1 (n=144) at lab10.c:11
+#36 0x00005555555551e0 in recursion2 (n=143) at lab10.c:21
+#37 0x0000555555555186 in recursion1 (n=142) at lab10.c:11
+#38 0x00005555555551e0 in recursion2 (n=141) at lab10.c:21
+#39 0x0000555555555186 in recursion1 (n=140) at lab10.c:11
+#40 0x00005555555551e0 in recursion2 (n=139) at lab10.c:21
+#41 0x0000555555555186 in recursion1 (n=138) at lab10.c:11
+#42 0x00005555555551e0 in recursion2 (n=137) at lab10.c:21
+#43 0x0000555555555186 in recursion1 (n=136) at lab10.c:11
+#44 0x00005555555551e0 in recursion2 (n=135) at lab10.c:21
+#45 0x0000555555555186 in recursion1 (n=134) at lab10.c:11
+--Type <RET> for more, q to quit, c to continue without paging--
+#46 0x00005555555551e0 in recursion2 (n=133) at lab10.c:21
+#47 0x0000555555555186 in recursion1 (n=132) at lab10.c:11
+
+
+
+
+
